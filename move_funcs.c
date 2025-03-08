@@ -6,26 +6,25 @@
 /*   By: gurganci <gurganci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 12:47:19 by gurganci          #+#    #+#             */
-/*   Updated: 2025/03/04 15:07:11 by gurganci         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:11:25 by gurganci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	swap(char *str, t_stack **stack, int size)
+void	swap(char *str, t_stack *stack)
 {
-	t_stack	*first;
-	t_stack	*second;
+	int	content;
+	int	index;
 
-	if (size <= 1)
+	if (!stack || !(stack->next))
 		return ;
-	first = *stack;
-	second = first->next;
-	if (!second)
-		return ;
-	first->next = second->next;
-	second->next = first;
-	*stack = second;
+	content = stack->content;
+	stack->content = stack->next->content;
+	stack->next->content = content;
+	index = stack->index;
+	stack->index = stack->next->index;
+	stack->next->index = index;
 	ft_putendl_fd(str, 1);
 }
 
@@ -50,10 +49,10 @@ void	rotate(char *str, t_stack **stack)
 	if (!stack || !*stack)
 		return ;
 	top = *stack;
-	last = ft_lstlast(*stack);
-	*stack = top->next;
-	top->next = NULL;
+	*stack = (*stack)->next;
+	last = ft_last(*stack);
 	last->next = top;
+	top->next = NULL;
 	ft_putendl_fd(str, 1);
 }
 

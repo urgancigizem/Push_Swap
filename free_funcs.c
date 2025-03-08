@@ -6,7 +6,7 @@
 /*   By: gurganci <gurganci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:51:17 by gurganci          #+#    #+#             */
-/*   Updated: 2025/03/04 17:08:47 by gurganci         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:09:49 by gurganci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,18 @@ void	ft_free_for_str(char **lst)
 	lst = NULL;
 }
 
-
-#include <stdio.h>
-void	ft_free_for_stack(t_stack **lst)
+void	ft_free_for_stack(t_stack *stack)
 {
-	t_stack *tmp;
-	t_stack *current;
+	t_stack	*current;
+	t_stack	*next;
 
-	current = *lst;
-	tmp = NULL;
-	if (!lst)
+	if (stack == NULL)
 		return ;
+	current = stack;
 	while (current != NULL)
 	{
-		tmp = current->next;
+		next = current->next;
 		free(current);
-		current = tmp;
+		current = next;
 	}
 }

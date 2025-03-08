@@ -6,7 +6,7 @@
 /*   By: gurganci <gurganci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:50:55 by gurganci          #+#    #+#             */
-/*   Updated: 2025/03/04 16:48:42 by gurganci         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:10:27 by gurganci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	ft_add_back(t_stack **stack, t_stack *stack_new)
 	if (!*stack)
 		*stack = stack_new;
 	else
-		(ft_lstlast((*stack))->next = stack_new);
+		ft_last((*stack))->next = stack_new;
 }

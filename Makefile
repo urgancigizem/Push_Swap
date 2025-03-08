@@ -1,45 +1,37 @@
+NAME        = push_swap
 
+SRCS_MAIN   = push_swap.c
 
-NAME		= push_swap
+SRCS        = check_funcs.c \
+              error.c \
+              free_funcs.c \
+              sort_func.c \
+              ft_add_back.c \
+              ft_create_index.c \
+              ft_new_stack.c \
+              input_handlers.c \
+              move_funcs.c \
+              utils.c 
 
-SRCS_MAIN	= push_swap.c
+OBJS        = $(SRCS:.c=.o) $(SRCS_MAIN:.c=.o)
 
-SRCS 		= check_funcs.c\
-			  error.c\
-			  free_funcs.c\
-			  sort_func.c\
-			  ft_add_back.c\
-			  ft_create_index.c\
-			  ft_new_stack.c\
-			  input_handlers.c\
-			  move_funcs.c\
-
-LIBFT_DIR	= libft
-
-LIBFT		= $(LIBFT_DIR)/libft.a
-
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror -I$(LIBFT_DIR) -g
-
-OBJS_MAIN	= $(SRCS_MAIN:.c=.o) $(SRCS:.c=.o)
-
-$(NAME): $(OBJS_MAIN) $(LIBFT)
-	@$(CC) $(CFLAGS) $(OBJS_MAIN) -lft -L$(LIBFT_DIR) -o $(NAME)
-
-$(LIBFT):
-	make -C $(LIBFT_DIR)
-	make -C $(LIBFT_DIR) bonus
+CC          = cc
+CFLAGS      = -Wall -Werror -Wextra -g
 
 all: $(NAME)
 
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
-	make -s -C $(LIBFT_DIR) clean
-	$(RM) $(OBJS_MAIN) 
+	rm -f $(OBJS)
 
 fclean: clean
-	make -C $(LIBFT_DIR) fclean
-	$(RM) $(NAME) 
+	rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re 
+.PHONY: all clean fclean re

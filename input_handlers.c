@@ -6,7 +6,7 @@
 /*   By: gurganci <gurganci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 15:51:32 by gurganci          #+#    #+#             */
-/*   Updated: 2025/03/04 17:09:00 by gurganci         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:41:59 by gurganci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_stack	*ft_split_string(char *argv)
 
 	a = NULL;
 	i = 0;
-	tmp = ft_split(argv, 32);
+	tmp = ft_split(argv);
 	while (tmp[i] != NULL)
 		i++;
 	if (i == 0 || argv == NULL)
@@ -37,13 +37,13 @@ t_stack	*ft_split_string(char *argv)
 			ft_free_for_str(tmp);
 			ft_error();
 		}
-		number = ft_atoi(tmp[i]);
+		number = ft_atol(tmp[i]);
 		if (max_min_check(number) == 0)
 		{
 			ft_free_for_str(tmp);
 			ft_error();
 		}
-		ft_add_back(&a, ft_new_stack(number, a));
+		ft_add_back(&a, ft_new_stack(number));
 		i++;
 	}
 	ft_free_for_str(tmp);
@@ -68,7 +68,7 @@ int	valid_check(const char *arg)
 		return (0);
 	while (arg[i])
 	{
-		if (ft_isdigit(arg[i]) == 0)
+		if (!(arg[i] >= 48 && arg[i] <= 57))
 			return (0);
 		i++;
 	}
@@ -94,23 +94,18 @@ t_stack	*main_input_handlers(int argc, char **argv)
 		{
 			if (valid_check(argv[i]) == 0)
 				ft_error();
-			j = ft_atoi(argv[i]);
+			j = ft_atol(argv[i]);
 			if (max_min_check(j) == 0)
 				ft_error();
-			new = ft_new_stack(j, a);
+			new = ft_new_stack(j);
 			if (!new)
 			{
-				ft_free_for_stack(&a);
+				ft_free_for_stack(a);
 				ft_error();
 			}
 			ft_add_back(&a, new);
 			i++;
 		}
-		// while(new->next != NULL)	
-		// {		
-			
-		// 	new = new->next;
-		// }
 	}
 	return (a);
 }
