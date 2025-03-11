@@ -6,7 +6,7 @@
 /*   By: gurganci <gurganci@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 14:28:42 by gurganci          #+#    #+#             */
-/*   Updated: 2025/03/08 13:09:22 by gurganci         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:11:49 by gurganci         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	sort_for_three(t_stack **a)
 	else if ((first < second) && (second > third) && (first > third))
 		reverse_rotate("rra", a);
 }
+
 void	sort_for_four(t_stack **a, t_stack **b)
 {
 	int	a_size;
@@ -58,12 +59,14 @@ void	sort_for_four(t_stack **a, t_stack **b)
 	push("pa", a, b);
 }
 
-void	sort_for_five(t_stack **a, t_stack **b)
+void	ft_pretreatment(t_stack **a, t_stack **b)
 {
 	int	a_size;
+	int	i;
 
+	i = 0;
 	a_size = ft_stsize(*a);
-	while (a_size > 3 && a != NULL)
+	while (a_size > 3 && a != NULL && i < 5)
 	{
 		if ((*a)->index == 0)
 			push("pb", b, a);
@@ -72,13 +75,26 @@ void	sort_for_five(t_stack **a, t_stack **b)
 		else
 			rotate("ra", a);
 		a_size = ft_stsize(*a);
+		i++;
 	}
 	if (a && ft_stsize(*a) == 3)
 		sort_for_three(a);
-	if ((*b)->next->content > (*b)->content)
-		swap("sb", *b);
-	while (ft_stsize(*b))
+	while (ft_stsize(*b) > 0)
 		push("pa", a, b);
+	if ((*a)->index > (*a)->next->index)
+		swap("sa", *a);
+}
+
+static int	ft_bit_calculate(t_stack **a)
+{
+	int	bit_size;
+	int	a_size;
+
+	bit_size = 0;
+	a_size = ft_stsize(*a);
+	while (a_size > 1 && ++bit_size)
+		a_size /= 2;
+	return (bit_size);
 }
 
 void	radix_sort(t_stack **a, t_stack **b)
@@ -87,13 +103,12 @@ void	radix_sort(t_stack **a, t_stack **b)
 	int	bit_size;
 	int	a_size;
 
-	bit_size = 0;
+	bit_size = ft_bit_calculate(a);
+	ft_pretreatment(a, b);
 	a_size = ft_stsize(*a);
-	while (a_size > 1 && ++bit_size)
-		a_size /= 2;
-	++bit_size;
+	bit_size = ft_bit_calculate(a);
 	i = -1;
-	while (++i <= bit_size)
+	while (++i <= bit_size && !ft_check_for_sort(*a))
 	{
 		a_size = ft_stsize(*a);
 		while (a_size-- && !ft_check_for_sort(*a))

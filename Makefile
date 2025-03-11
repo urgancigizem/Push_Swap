@@ -11,7 +11,8 @@ SRCS        = check_funcs.c \
               ft_new_stack.c \
               input_handlers.c \
               move_funcs.c \
-              utils.c 
+              utils.c \
+              utils_cont.c 
 
 OBJS        = $(SRCS:.c=.o) $(SRCS_MAIN:.c=.o)
 
